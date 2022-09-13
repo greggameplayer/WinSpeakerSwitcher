@@ -2,7 +2,6 @@ import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:win32audio/win32audio.dart';
 
 class AudioDeviceExtended extends AudioDevice {
-
   HotKey? hotKey;
 
   AudioDeviceExtended({
@@ -78,11 +77,22 @@ class AudioDeviceExtended extends AudioDevice {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is AudioDeviceExtended && other.id == id && other.name == name && other.iconPath == iconPath && other.iconID == iconID && other.isActive == isActive && other.hotKey == hotKey;
+    return other is AudioDeviceExtended &&
+        other.id == id &&
+        other.name == name &&
+        other.iconPath == iconPath &&
+        other.iconID == iconID &&
+        other.isActive == isActive &&
+        other.hotKey == hotKey;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ name.hashCode ^ iconPath.hashCode ^ iconID.hashCode ^ isActive.hashCode ^ hotKey.hashCode;
+    return id.hashCode ^
+        name.hashCode ^
+        iconPath.hashCode ^
+        iconID.hashCode ^
+        isActive.hashCode ^
+        hotKey.hashCode;
   }
 }

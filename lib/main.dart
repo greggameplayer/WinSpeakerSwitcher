@@ -257,23 +257,20 @@ class _MyAppState extends State<MyApp> {
                                   children: [
                                     GestureDetector(
                                       onSecondaryTap: () async {
-                                        if (audioDevices[index]
-                                            .hotKey !=
+                                        if (audioDevices[index].hotKey !=
                                             null) {
                                           _handleHotKeyUnregister(
-                                              audioDevices[index]
-                                                  .hotKey!);
+                                              audioDevices[index].hotKey!);
 
                                           setState(() {
-                                            audioDevices[index].hotKey =
-                                            null;
+                                            audioDevices[index].hotKey = null;
                                           });
 
                                           await localStorage.setItem(
                                               "audioDevices",
                                               audioDevices
                                                   .map((element) =>
-                                                  element.toMap())
+                                                      element.toMap())
                                                   .toList());
                                         }
                                       },

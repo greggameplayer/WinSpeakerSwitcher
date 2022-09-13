@@ -51,11 +51,12 @@ class _RecordHotKeyDialogState extends State<RecordHotKeyDialog> {
                   value: _hotKey?.scope == HotKeyScope.inapp,
                   onChanged: (newValue) {
                     _hotKey?.scope =
-                    newValue! ? HotKeyScope.inapp : HotKeyScope.system;
+                        newValue! ? HotKeyScope.inapp : HotKeyScope.system;
                     setState(() {});
                   },
                 ),
-                const Text('Set as inapp-wide hotkey. (default is system-wide)'),
+                const Text(
+                    'Set as inapp-wide hotkey. (default is system-wide)'),
               ],
             ),
           ],
@@ -72,9 +73,9 @@ class _RecordHotKeyDialogState extends State<RecordHotKeyDialog> {
           onPressed: _hotKey == null
               ? null
               : () {
-            widget.onHotKeyRecorded(_hotKey!);
-            Navigator.of(context).pop();
-          },
+                  widget.onHotKeyRecorded(_hotKey!);
+                  Navigator.of(context).pop();
+                },
           child: const Text('OK'),
         ),
       ],
