@@ -19,9 +19,6 @@ jobs:
           flutter format --set-exit-if-changed .
           flutter analyze
           flutter test integration_test
-      - name: Build
-        run: |
-          flutter build windows
       - name: EXE and MSIX building
         run: |
           flutter pub run msix:create
