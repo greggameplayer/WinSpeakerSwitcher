@@ -1,0 +1,38 @@
+name: release
+on: 
+  workflow_dispatch:
+    branches:
+        - main
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.0.5'
+          channel: stable
+      - name: Analyze & Test
+        run: |
+          flutter pub get
+          flutter format --set-exit-if-changed .
+          flutter analyze
+          flutter test integration_test
+      - name: Build
+        run: |
+          flutter build windows
+      - name: EXE and MSIX building
+        run: |
+          flutter pub run msix:create
+      - name: Retrieve Release Version
+        id: versionstep
+        run: |
+          VERSION=$(more pubspec.yaml | grep version: | cut -d ' ' -f2)
+          echo "::set-output name=VERSION::$VERSION"
+      - name: Upload artifacts onto Github
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: 'build/windows/runner/Release/WinSpeakerSwitcher.msix'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: v${{ steps.versionstep.outputs.VERSION }}
