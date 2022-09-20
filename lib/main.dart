@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto_updater/auto_updater.dart';
 import 'package:flutter/material.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:localstorage/localstorage.dart';
@@ -16,7 +17,13 @@ import 'widgets/animated_progress_bar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await windowManager.ensureInitialized();
+
+  String feedURL = 'https://update.gregsvc.fr/WinSpeakerSwitcher.xml';
+  await autoUpdater.setFeedURL(feedURL);
+  await autoUpdater.checkForUpdates();
+
   // For hot reload, `unregisterAll()` needs to be called.
   WindowOptions windowOptions = const WindowOptions(
     size: Size(800, 600),

@@ -1,5 +1,5 @@
 name: release
-on: 
+on:
   workflow_dispatch:
     branches:
         - main
@@ -13,23 +13,36 @@ jobs:
         with:
           flutter-version: '3.0.5'
           channel: stable
+      - name: Chocolatey installs
+        uses: crazy-max/ghaction-chocolatey@v2
+        with:
+          args: install openssl innosetup -y
+      - name: Enable flutter_distributor
+        run: |
+          dart pub global activate flutter_distributor
       - name: Analyze & Test
         run: |
           flutter pub get
           flutter format --set-exit-if-changed .
           flutter analyze
           flutter test integration_test
-      - name: EXE and MSIX building
+      - name: EXE building
         run: |
-          flutter pub run msix:create
+          flutter_distributor release --name dev --jobs release-windows
       - name: Retrieve Release Version
         id: versionstep
         run: |
           VERSION=$(more pubspec.yaml | grep version: | cut -d ' ' -f2)
           echo "::set-output name=VERSION::$VERSION"
+      - name: Rename EXE
+        run: |
+          mv dist/${{ steps.versionstep.outputs.VERSION }}/*.exe dist/dev/release-windows/WinSpeakerSwitcher.exe
       - name: Upload artifacts onto Github
         uses: ncipollo/release-action@v1
         with:
-          artifacts: 'build/windows/runner/Release/WinSpeakerSwitcher.msix'
+          artifacts: "dist/${{ steps.versionstep.outputs.VERSION }}/*.exe"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: v${{ steps.versionstep.outputs.VERSION }}
+      - name: Retrieve update signature
+        run: |
+          flutter pub run auto_updater:sign_update dist/${{ steps.versionstep.outputs.VERSION }}/WinSpeakerSwitcher.exe

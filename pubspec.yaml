@@ -41,7 +41,7 @@ dependencies:
   localstorage: ^4.0.0+1
   window_manager: ^0.2.7
   auto_updater: ^0.1.6
-  launch_at_startup: ^0.1.9
+  launch_at_startup: ^0.2.0
   thread: ^0.2.1
 
 dev_dependencies:
@@ -56,15 +56,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.1
-  msix: ^3.6.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
-msix_config:
-  display_name: WinSpeakerSwitcher
-  publisher_display_name: greggameplayer
-  output_name: WinSpeakerSwitcher
 
 # The following section is specific to Flutter packages.
 flutter:
