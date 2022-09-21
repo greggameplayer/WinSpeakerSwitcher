@@ -28,15 +28,15 @@ jobs:
           flutter test integration_test
       - name: EXE building
         run: |
-          flutter_distributor release --name dev --jobs release-windows
+          flutter_distributor release --name prod --jobs release-windows
       - name: Retrieve Release Version
         id: versionstep
         run: |
-          VERSION=$(more pubspec.yaml | grep version: | cut -d ' ' -f2)
+          $VERSION = $(($(grep '^version:' pubspec.yaml) -Split "\s+")[1])
           echo "::set-output name=VERSION::$VERSION"
       - name: Rename EXE
         run: |
-          mv dist/${{ steps.versionstep.outputs.VERSION }}/*.exe dist/dev/release-windows/WinSpeakerSwitcher.exe
+          mv dist/${{ steps.versionstep.outputs.VERSION }}/*.exe dist/${{ steps.versionstep.outputs.VERSION }}/WinSpeakerSwitcher.exe
       - name: Upload artifacts onto Github
         uses: ncipollo/release-action@v1
         with:
