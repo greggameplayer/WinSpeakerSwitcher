@@ -1,6 +1,10 @@
 import 'package:hotkey_manager/hotkey_manager.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:win32audio/win32audio.dart';
 
+part 'audio_device_extended.g.dart';
+
+@JsonSerializable()
 class AudioDeviceExtended extends AudioDevice {
   HotKey? hotKey;
 
@@ -60,18 +64,9 @@ class AudioDeviceExtended extends AudioDevice {
     }
   }
 
-  static AudioDeviceExtended fromMap(Map<String, dynamic> map) {
-    AudioDeviceExtended device = AudioDeviceExtended();
-    device.id = map['id'];
-    device.name = map['name'];
-    device.iconPath = map['iconPath'];
-    device.iconID = map['iconID'];
-    device.isActive = map['isActive'];
-    if (map['hotKey'] != null) {
-      device.hotKey = HotKey.fromJson(map['hotKey']);
-    }
-    return device;
-  }
+  factory AudioDeviceExtended.fromJson(Map<String, dynamic> json) => _$AudioDeviceExtendedFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AudioDeviceExtendedToJson(this);
 
   @override
   bool operator ==(Object other) {

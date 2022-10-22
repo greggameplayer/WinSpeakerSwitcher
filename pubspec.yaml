@@ -43,7 +43,11 @@ dependencies:
   auto_updater: ^0.1.6
   launch_at_startup: ^0.2.0
   thread: ^0.2.1
-  flutter_bloc: ^8.1.1
+  flutter_riverpod: ^2.0.2
+  json_annotation: ^4.7.0
+  dio: ^4.0.6
+  freezed_annotation: ^2.1.0
+  equatable: ^2.0.5
 
 dev_dependencies:
   integration_test:
@@ -57,6 +61,9 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.1
+  freezed: ^2.1.1
+  build_runner: ^2.2.1
+  json_serializable: ^6.5.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

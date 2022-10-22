@@ -1,7 +1,8 @@
 import 'package:auto_updater/auto_updater.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
-import 'package:win_speaker_switcher/pages/home_page.dart';
+import 'package:win_speaker_switcher/pages/home/home_page.dart';
 import 'package:window_manager/window_manager.dart';
 
 void main() async {
@@ -28,7 +29,7 @@ void main() async {
   });
 
   await hotKeyManager.unregisterAll();
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
