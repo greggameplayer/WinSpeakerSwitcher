@@ -30,7 +30,6 @@ mixin _$Home {
   bool get stateFetchAudioMixerPeak => throw _privateConstructorUsedError;
   double get volume => throw _privateConstructorUsedError;
   String get fetchStatus => throw _privateConstructorUsedError;
-  Map<String, List<int>> get audioIcons => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,8 +48,7 @@ abstract class $HomeCopyWith<$Res> {
       List<ProcessVolumeExtended> mixerList,
       bool stateFetchAudioMixerPeak,
       double volume,
-      String fetchStatus,
-      Map<String, List<int>> audioIcons});
+      String fetchStatus});
 }
 
 /// @nodoc
@@ -71,7 +69,6 @@ class _$HomeCopyWithImpl<$Res> implements $HomeCopyWith<$Res> {
     Object? stateFetchAudioMixerPeak = freezed,
     Object? volume = freezed,
     Object? fetchStatus = freezed,
-    Object? audioIcons = freezed,
   }) {
     return _then(_value.copyWith(
       defaultDevice: defaultDevice == freezed
@@ -106,10 +103,6 @@ class _$HomeCopyWithImpl<$Res> implements $HomeCopyWith<$Res> {
           ? _value.fetchStatus
           : fetchStatus // ignore: cast_nullable_to_non_nullable
               as String,
-      audioIcons: audioIcons == freezed
-          ? _value.audioIcons
-          : audioIcons // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<int>>,
     ));
   }
 }
@@ -127,8 +120,7 @@ abstract class _$$_HomeCopyWith<$Res> implements $HomeCopyWith<$Res> {
       List<ProcessVolumeExtended> mixerList,
       bool stateFetchAudioMixerPeak,
       double volume,
-      String fetchStatus,
-      Map<String, List<int>> audioIcons});
+      String fetchStatus});
 }
 
 /// @nodoc
@@ -150,7 +142,6 @@ class __$$_HomeCopyWithImpl<$Res> extends _$HomeCopyWithImpl<$Res>
     Object? stateFetchAudioMixerPeak = freezed,
     Object? volume = freezed,
     Object? fetchStatus = freezed,
-    Object? audioIcons = freezed,
   }) {
     return _then(_$_Home(
       defaultDevice: defaultDevice == freezed
@@ -185,10 +176,6 @@ class __$$_HomeCopyWithImpl<$Res> extends _$HomeCopyWithImpl<$Res>
           ? _value.fetchStatus
           : fetchStatus // ignore: cast_nullable_to_non_nullable
               as String,
-      audioIcons: audioIcons == freezed
-          ? _value._audioIcons
-          : audioIcons // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<int>>,
     ));
   }
 }
@@ -205,11 +192,9 @@ class _$_Home implements _Home {
       required final List<ProcessVolumeExtended> mixerList,
       required this.stateFetchAudioMixerPeak,
       required this.volume,
-      required this.fetchStatus,
-      required final Map<String, List<int>> audioIcons})
+      required this.fetchStatus})
       : _audioDevices = audioDevices,
-        _mixerList = mixerList,
-        _audioIcons = audioIcons;
+        _mixerList = mixerList;
 
   factory _$_Home.fromJson(Map<String, dynamic> json) => _$$_HomeFromJson(json);
 
@@ -239,16 +224,10 @@ class _$_Home implements _Home {
   final double volume;
   @override
   final String fetchStatus;
-  final Map<String, List<int>> _audioIcons;
-  @override
-  Map<String, List<int>> get audioIcons {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_audioIcons);
-  }
 
   @override
   String toString() {
-    return 'Home(defaultDevice: $defaultDevice, initialized: $initialized, audioDeviceType: $audioDeviceType, audioDevices: $audioDevices, mixerList: $mixerList, stateFetchAudioMixerPeak: $stateFetchAudioMixerPeak, volume: $volume, fetchStatus: $fetchStatus, audioIcons: $audioIcons)';
+    return 'Home(defaultDevice: $defaultDevice, initialized: $initialized, audioDeviceType: $audioDeviceType, audioDevices: $audioDevices, mixerList: $mixerList, stateFetchAudioMixerPeak: $stateFetchAudioMixerPeak, volume: $volume, fetchStatus: $fetchStatus)';
   }
 
   @override
@@ -270,9 +249,7 @@ class _$_Home implements _Home {
                 other.stateFetchAudioMixerPeak, stateFetchAudioMixerPeak) &&
             const DeepCollectionEquality().equals(other.volume, volume) &&
             const DeepCollectionEquality()
-                .equals(other.fetchStatus, fetchStatus) &&
-            const DeepCollectionEquality()
-                .equals(other._audioIcons, _audioIcons));
+                .equals(other.fetchStatus, fetchStatus));
   }
 
   @JsonKey(ignore: true)
@@ -286,8 +263,7 @@ class _$_Home implements _Home {
       const DeepCollectionEquality().hash(_mixerList),
       const DeepCollectionEquality().hash(stateFetchAudioMixerPeak),
       const DeepCollectionEquality().hash(volume),
-      const DeepCollectionEquality().hash(fetchStatus),
-      const DeepCollectionEquality().hash(_audioIcons));
+      const DeepCollectionEquality().hash(fetchStatus));
 
   @JsonKey(ignore: true)
   @override
@@ -311,8 +287,7 @@ abstract class _Home implements Home {
       required final List<ProcessVolumeExtended> mixerList,
       required final bool stateFetchAudioMixerPeak,
       required final double volume,
-      required final String fetchStatus,
-      required final Map<String, List<int>> audioIcons}) = _$_Home;
+      required final String fetchStatus}) = _$_Home;
 
   factory _Home.fromJson(Map<String, dynamic> json) = _$_Home.fromJson;
 
@@ -332,8 +307,6 @@ abstract class _Home implements Home {
   double get volume;
   @override
   String get fetchStatus;
-  @override
-  Map<String, List<int>> get audioIcons;
   @override
   @JsonKey(ignore: true)
   _$$_HomeCopyWith<_$_Home> get copyWith => throw _privateConstructorUsedError;

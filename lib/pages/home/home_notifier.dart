@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:win32audio/win32audio.dart';
@@ -7,14 +6,18 @@ import '../../models/audio_device_extended/audio_device_extended.dart';
 import '../../models/audio_extended.dart';
 import '../../models/home/home.dart';
 import '../../services/home_service.dart';
+import 'icons_notifier.dart';
 
 class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
   final Ref ref;
+
+  late final IconsNotifier iconsNotifier;
 
   late final HomeService service;
 
   HomeNotifier(this.ref) : super(const AsyncValue.loading()) {
     service = ref.watch(homeService);
+    iconsNotifier = ref.watch(iconsNotifierProvider.notifier);
   }
 
   Future<void> getData() async {
@@ -25,28 +28,15 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
     if (!mounted) return;
     if (state.hasValue) {
       var audioDevices = await AudioExtended.enumDevices(
-          state.value!.audioDeviceType, state.value!.audioDevices) ??
+              state.value!.audioDeviceType, state.value!.audioDevices) ??
           [];
       var volume = await Audio.getVolume(state.value!.audioDeviceType);
       var defaultDevice =
-      (await AudioExtended.getDefaultDevice(state.value!.audioDeviceType))!;
-
-      Map<String, List<int>> audioIcons = {};
-      for (var audioDevice in audioDevices) {
-        if (audioIcons[audioDevice.id] == null) {
-          audioIcons[audioDevice.id] = (await WinIcons()
-              .extractFileIcon(audioDevice.iconPath,
-              iconID: audioDevice.iconID)) as List<int>;
-        }
-      }
+          (await AudioExtended.getDefaultDevice(state.value!.audioDeviceType))!;
 
       var mixerList = await AudioExtended.enumAudioMixer() ?? [];
-      for (var mixer in mixerList) {
-        if (audioIcons[mixer.processPath] == null) {
-          audioIcons[mixer.processPath] =
-          (await WinIcons().extractFileIcon(mixer.processPath))!.toList();
-        }
-      }
+
+      await iconsNotifier.updateIcons(audioDevices, mixerList);
 
       var fetchStatus = "Get";
 
@@ -55,8 +45,7 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
           volume: volume,
           defaultDevice: defaultDevice,
           mixerList: mixerList,
-          fetchStatus: fetchStatus,
-          audioIcons: audioIcons));
+          fetchStatus: fetchStatus));
     }
   }
 
@@ -92,14 +81,12 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
       if (state.value!.stateFetchAudioMixerPeak) {
         var mixerList = await AudioExtended.enumAudioMixer() ?? [];
 
-        for (var mixer in state.value!.mixerList) {
-          if (state.value!.audioIcons[mixer.processPath] == null) {
-            state.value!.audioIcons[mixer.processPath] = (await WinIcons()
-                .extractFileIcon(mixer.processPath)) as List<int>;
-          }
+        if (!const DeepCollectionEquality().equals(state.value!.mixerList, mixerList)) {
+          await iconsNotifier.updateProcessIcons(mixerList);
         }
-        state = AsyncValue<Home>.data(state.value!.copyWith(
-            mixerList: mixerList));
+
+        state =
+            AsyncValue<Home>.data(state.value!.copyWith(mixerList: mixerList));
       }
     }
   }
@@ -108,8 +95,8 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
     if (!mounted) return;
     if (state.hasValue) {
       var fetchStatus = "Getting...";
-      state = AsyncValue<Home>.data(state.value!.copyWith(
-          fetchStatus: fetchStatus));
+      state = AsyncValue<Home>.data(
+          state.value!.copyWith(fetchStatus: fetchStatus));
       await fetchAudioDevices();
     }
   }
@@ -123,20 +110,21 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
       }
       if (!state.value!.initialized) {
         await service.localStorage.ready;
-        var tmpAudioDevices = service.localStorage.getItem("audioDevices") ??
-            [];
+        var tmpAudioDevices =
+            service.localStorage.getItem("audioDevices") ?? [];
 
         var audioDevices = List<AudioDeviceExtended>.from(
             (tmpAudioDevices as List)
                 .map((item) => AudioDeviceExtended.fromJson(item)));
-        state =
-        AsyncValue<Home>.data(state.value!.copyWith(audioDevices: audioDevices));
+        state = AsyncValue<Home>.data(
+            state.value!.copyWith(audioDevices: audioDevices));
 
         fetchAudioDevices();
 
         var initialized = true;
 
-        state = AsyncValue<Home>.data(state.value!.copyWith(initialized: initialized));
+        state = AsyncValue<Home>.data(
+            state.value!.copyWith(initialized: initialized));
       }
 
       for (var element in state.value!.audioDevices) {
@@ -164,8 +152,8 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
 
       state.value!.audioDevices[index].hotKey = null;
 
-      state = AsyncValue<Home>.data(state.value!.copyWith(
-          audioDevices: state.value!.audioDevices));
+      state = AsyncValue<Home>.data(
+          state.value!.copyWith(audioDevices: state.value!.audioDevices));
 
       await service.localStorage.setItem("audioDevices",
           state.value!.audioDevices.map((element) => element.toMap()).toList());
@@ -182,8 +170,8 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
       handleHotKeyRegister(newHotKey, index);
 
       state.value!.audioDevices[index].hotKey = newHotKey;
-      state = AsyncValue<Home>.data(state.value!.copyWith(
-          audioDevices: state.value!.audioDevices));
+      state = AsyncValue<Home>.data(
+          state.value!.copyWith(audioDevices: state.value!.audioDevices));
 
       await service.localStorage.setItem("audioDevices",
           state.value!.audioDevices.map((element) => element.toMap()).toList());
@@ -194,11 +182,10 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
     if (!mounted) return;
 
     if (state.hasValue) {
-      await Audio.setDefaultDevice(
-          state.value!.audioDevices[index].id);
+      await Audio.setDefaultDevice(state.value!.audioDevices[index].id);
       fetchAudioDevices();
-      state = AsyncValue<Home>.data(state.value!.copyWith(
-          defaultDevice: state.value!.audioDevices[index]));
+      state = AsyncValue<Home>.data(state.value!
+          .copyWith(defaultDevice: state.value!.audioDevices[index]));
     }
   }
 
@@ -207,8 +194,8 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
 
     if (state.hasValue) {
       var stateFetchAudioMixerPeak = actualState!;
-      state = AsyncValue<Home>.data(state.value!.copyWith(
-          stateFetchAudioMixerPeak: stateFetchAudioMixerPeak));
+      state = AsyncValue<Home>.data(state.value!
+          .copyWith(stateFetchAudioMixerPeak: stateFetchAudioMixerPeak));
     }
   }
 
@@ -217,23 +204,15 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
 
     if (state.hasValue) {
       await Audio.setAudioMixerVolume(
-          state.value!.mixerList[index].processId,
-          volume);
+          state.value!.mixerList[index].processId, volume);
       state.value!.mixerList[index].maxVolume = volume;
-      state = AsyncValue<Home>.data(state.value!.copyWith(
-          mixerList: state.value!.mixerList));
+      state = AsyncValue<Home>.data(
+          state.value!.copyWith(mixerList: state.value!.mixerList));
     }
-  }
-
-  Uint8List getIcon(String index) {
-    if (!mounted) return Uint8List(0);
-    if (state.hasValue) {
-      return Uint8List.fromList(state.value!.audioIcons[index]!);
-    }
-    return Uint8List(0);
   }
 }
 
-final homeNotifierProvider = StateNotifierProvider<HomeNotifier, AsyncValue<Home>>((ref) {
+final homeNotifierProvider =
+    StateNotifierProvider<HomeNotifier, AsyncValue<Home>>((ref) {
   return HomeNotifier(ref);
 });

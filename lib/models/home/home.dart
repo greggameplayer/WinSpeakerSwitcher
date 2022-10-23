@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:win32audio/win32audio.dart';
 import 'package:win_speaker_switcher/models/process_volume_extended/process_volume_extended.dart';
@@ -21,8 +19,7 @@ class Home with _$Home {
     required List<ProcessVolumeExtended> mixerList,
     required bool stateFetchAudioMixerPeak,
     required double volume,
-    required String fetchStatus,
-    required Map<String, List<int>> audioIcons
+    required String fetchStatus
 }) = _Home;
 
   factory Home.fromJson(Map<String, dynamic> json) => _$HomeFromJson(json);

@@ -21,10 +21,6 @@ _$_Home _$$_HomeFromJson(Map<String, dynamic> json) => _$_Home(
       stateFetchAudioMixerPeak: json['state_fetch_audio_mixer_peak'] as bool,
       volume: (json['volume'] as num).toDouble(),
       fetchStatus: json['fetch_status'] as String,
-      audioIcons: (json['audio_icons'] as Map<String, dynamic>).map(
-        (k, e) =>
-            MapEntry(k, (e as List<dynamic>).map((e) => e as int).toList()),
-      ),
     );
 
 Map<String, dynamic> _$$_HomeToJson(_$_Home instance) => <String, dynamic>{
@@ -36,7 +32,6 @@ Map<String, dynamic> _$$_HomeToJson(_$_Home instance) => <String, dynamic>{
       'state_fetch_audio_mixer_peak': instance.stateFetchAudioMixerPeak,
       'volume': instance.volume,
       'fetch_status': instance.fetchStatus,
-      'audio_icons': instance.audioIcons,
     };
 
 const _$AudioDeviceTypeEnumMap = {
