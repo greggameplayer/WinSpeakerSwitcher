@@ -6,17 +6,24 @@ releases:
       - name: release-windows
         package:
           platform: windows
-          target: exe
+          target: msix
           build_args:
             dart-define:
               APP_ENV: dev
   - name: prod
     jobs:
       # See full documentation: https://distributor.leanflutter.org/configuration/makers/exe
-      - name: release-windows
+      - name: release-windows-exe
         package:
           platform: windows
           target: exe
+          build_args:
+            dart-define:
+              APP_ENV: prod
+      - name: release-windows-msix
+        package:
+          platform: windows
+          target: msix
           build_args:
             dart-define:
               APP_ENV: prod

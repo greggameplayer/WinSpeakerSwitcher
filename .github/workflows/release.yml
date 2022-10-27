@@ -25,24 +25,24 @@ jobs:
           flutter pub get
           flutter format --set-exit-if-changed .
           flutter analyze
-          flutter test integration_test
-      - name: EXE building
+      - name: EXE & MSIX building
         run: |
-          flutter_distributor release --name prod --jobs release-windows
+          flutter_distributor release --name prod --jobs release-windows-exe,release-windows-msix
       - name: Retrieve Release Version
         id: versionstep
         run: |
           $VERSION = $(($(grep '^version:' pubspec.yaml) -Split "\s+")[1])
           echo "::set-output name=VERSION::$VERSION"
-      - name: Rename EXE
+      - name: Rename EXE & MSIX
         run: |
           mv dist/${{ steps.versionstep.outputs.VERSION }}/*.exe dist/${{ steps.versionstep.outputs.VERSION }}/WinSpeakerSwitcher.exe
+          mv dist/${{ steps.versionstep.outputs.VERSION }}/*.msix dist/${{ steps.versionstep.outputs.VERSION }}/WinSpeakerSwitcher.msix
       - name: Upload artifacts onto Github
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "dist/${{ steps.versionstep.outputs.VERSION }}/*.exe"
+          artifacts: "dist/${{ steps.versionstep.outputs.VERSION }}/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: v${{ steps.versionstep.outputs.VERSION }}
       - name: Retrieve update signature
         run: |
-          flutter pub run auto_updater:sign_update dist/${{ steps.versionstep.outputs.VERSION }}/WinSpeakerSwitcher.exe
+          flutter pub run auto_updater:sign_update dist/${{ steps.versionstep.outputs.VERSION }}/WinSpeakerSwitcher.msix
