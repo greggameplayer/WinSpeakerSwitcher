@@ -1,6 +1,7 @@
 import 'package:win32audio/win32audio.dart';
+import 'package:win_speaker_switcher/models/process_volume_extended/process_volume_extended.dart';
 
-import 'audio_device_extended.dart';
+import 'audio_device_extended/audio_device_extended.dart';
 
 class AudioExtended extends Audio {
   static Future<List<AudioDeviceExtended>?> enumDevices(
@@ -66,5 +67,20 @@ class AudioExtended extends Audio {
     audioDevice.iconID = int.parse(iconData[1]);
     audioDevice.isActive = map['isActive'];
     return audioDevice;
+  }
+
+  static Future<List<ProcessVolumeExtended>?> enumAudioMixer({AudioRole audioRole = AudioRole.multimedia}) async {
+    final Map<String, dynamic> arguments = <String, dynamic>{"role": audioRole.index};
+    final Map<dynamic, dynamic> map = await audioMethodChannel.invokeMethod("enumAudioMixer", arguments);
+    List<ProcessVolumeExtended>? processVolumes = <ProcessVolumeExtended>[];
+    for (int key in map.keys) {
+      final ProcessVolumeExtended processVolume = ProcessVolumeExtended();
+      processVolume.processId = key;
+      processVolume.processPath = map[key]["processPath"];
+      processVolume.maxVolume = map[key]["maxVolume"];
+      processVolume.peakVolume = map[key]["peakVolume"];
+      processVolumes.add(processVolume);
+    }
+    return processVolumes;
   }
 }

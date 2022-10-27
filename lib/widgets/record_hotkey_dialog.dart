@@ -10,10 +10,10 @@ class RecordHotKeyDialog extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _RecordHotKeyDialogState createState() => _RecordHotKeyDialogState();
+  RecordHotKeyDialogState createState() => RecordHotKeyDialogState();
 }
 
-class _RecordHotKeyDialogState extends State<RecordHotKeyDialog> {
+class RecordHotKeyDialogState extends State<RecordHotKeyDialog> {
   HotKey? _hotKey;
 
   @override
