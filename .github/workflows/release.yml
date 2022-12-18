@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '3.0.5'
+          flutter-version: '3.3.9'
           channel: stable
       - name: Chocolatey installs
         uses: crazy-max/ghaction-chocolatey@v2
