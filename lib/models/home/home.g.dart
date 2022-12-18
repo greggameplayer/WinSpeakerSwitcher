@@ -15,10 +15,6 @@ _$_Home _$$_HomeFromJson(Map<String, dynamic> json) => _$_Home(
       audioDevices: (json['audio_devices'] as List<dynamic>)
           .map((e) => AudioDeviceExtended.fromJson(e as Map<String, dynamic>))
           .toList(),
-      mixerList: (json['mixer_list'] as List<dynamic>)
-          .map((e) => ProcessVolumeExtended.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      stateFetchAudioMixerPeak: json['state_fetch_audio_mixer_peak'] as bool,
       volume: (json['volume'] as num).toDouble(),
       fetchStatus: json['fetch_status'] as String,
     );
@@ -28,8 +24,6 @@ Map<String, dynamic> _$$_HomeToJson(_$_Home instance) => <String, dynamic>{
       'initialized': instance.initialized,
       'audio_device_type': _$AudioDeviceTypeEnumMap[instance.audioDeviceType]!,
       'audio_devices': instance.audioDevices,
-      'mixer_list': instance.mixerList,
-      'state_fetch_audio_mixer_peak': instance.stateFetchAudioMixerPeak,
       'volume': instance.volume,
       'fetch_status': instance.fetchStatus,
     };

@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'home.dart';
 
@@ -25,9 +25,6 @@ mixin _$Home {
   AudioDeviceType get audioDeviceType => throw _privateConstructorUsedError;
   List<AudioDeviceExtended> get audioDevices =>
       throw _privateConstructorUsedError;
-  List<ProcessVolumeExtended> get mixerList =>
-      throw _privateConstructorUsedError;
-  bool get stateFetchAudioMixerPeak => throw _privateConstructorUsedError;
   double get volume => throw _privateConstructorUsedError;
   String get fetchStatus => throw _privateConstructorUsedError;
 
@@ -39,71 +36,63 @@ mixin _$Home {
 /// @nodoc
 abstract class $HomeCopyWith<$Res> {
   factory $HomeCopyWith(Home value, $Res Function(Home) then) =
-      _$HomeCopyWithImpl<$Res>;
+      _$HomeCopyWithImpl<$Res, Home>;
+  @useResult
   $Res call(
       {AudioDeviceExtended defaultDevice,
       bool initialized,
       AudioDeviceType audioDeviceType,
       List<AudioDeviceExtended> audioDevices,
-      List<ProcessVolumeExtended> mixerList,
-      bool stateFetchAudioMixerPeak,
       double volume,
       String fetchStatus});
 }
 
 /// @nodoc
-class _$HomeCopyWithImpl<$Res> implements $HomeCopyWith<$Res> {
+class _$HomeCopyWithImpl<$Res, $Val extends Home>
+    implements $HomeCopyWith<$Res> {
   _$HomeCopyWithImpl(this._value, this._then);
 
-  final Home _value;
   // ignore: unused_field
-  final $Res Function(Home) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? defaultDevice = freezed,
-    Object? initialized = freezed,
-    Object? audioDeviceType = freezed,
-    Object? audioDevices = freezed,
-    Object? mixerList = freezed,
-    Object? stateFetchAudioMixerPeak = freezed,
-    Object? volume = freezed,
-    Object? fetchStatus = freezed,
+    Object? defaultDevice = null,
+    Object? initialized = null,
+    Object? audioDeviceType = null,
+    Object? audioDevices = null,
+    Object? volume = null,
+    Object? fetchStatus = null,
   }) {
     return _then(_value.copyWith(
-      defaultDevice: defaultDevice == freezed
+      defaultDevice: null == defaultDevice
           ? _value.defaultDevice
           : defaultDevice // ignore: cast_nullable_to_non_nullable
               as AudioDeviceExtended,
-      initialized: initialized == freezed
+      initialized: null == initialized
           ? _value.initialized
           : initialized // ignore: cast_nullable_to_non_nullable
               as bool,
-      audioDeviceType: audioDeviceType == freezed
+      audioDeviceType: null == audioDeviceType
           ? _value.audioDeviceType
           : audioDeviceType // ignore: cast_nullable_to_non_nullable
               as AudioDeviceType,
-      audioDevices: audioDevices == freezed
+      audioDevices: null == audioDevices
           ? _value.audioDevices
           : audioDevices // ignore: cast_nullable_to_non_nullable
               as List<AudioDeviceExtended>,
-      mixerList: mixerList == freezed
-          ? _value.mixerList
-          : mixerList // ignore: cast_nullable_to_non_nullable
-              as List<ProcessVolumeExtended>,
-      stateFetchAudioMixerPeak: stateFetchAudioMixerPeak == freezed
-          ? _value.stateFetchAudioMixerPeak
-          : stateFetchAudioMixerPeak // ignore: cast_nullable_to_non_nullable
-              as bool,
-      volume: volume == freezed
+      volume: null == volume
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
               as double,
-      fetchStatus: fetchStatus == freezed
+      fetchStatus: null == fetchStatus
           ? _value.fetchStatus
           : fetchStatus // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -112,67 +101,54 @@ abstract class _$$_HomeCopyWith<$Res> implements $HomeCopyWith<$Res> {
   factory _$$_HomeCopyWith(_$_Home value, $Res Function(_$_Home) then) =
       __$$_HomeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {AudioDeviceExtended defaultDevice,
       bool initialized,
       AudioDeviceType audioDeviceType,
       List<AudioDeviceExtended> audioDevices,
-      List<ProcessVolumeExtended> mixerList,
-      bool stateFetchAudioMixerPeak,
       double volume,
       String fetchStatus});
 }
 
 /// @nodoc
-class __$$_HomeCopyWithImpl<$Res> extends _$HomeCopyWithImpl<$Res>
+class __$$_HomeCopyWithImpl<$Res> extends _$HomeCopyWithImpl<$Res, _$_Home>
     implements _$$_HomeCopyWith<$Res> {
   __$$_HomeCopyWithImpl(_$_Home _value, $Res Function(_$_Home) _then)
-      : super(_value, (v) => _then(v as _$_Home));
+      : super(_value, _then);
 
-  @override
-  _$_Home get _value => super._value as _$_Home;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? defaultDevice = freezed,
-    Object? initialized = freezed,
-    Object? audioDeviceType = freezed,
-    Object? audioDevices = freezed,
-    Object? mixerList = freezed,
-    Object? stateFetchAudioMixerPeak = freezed,
-    Object? volume = freezed,
-    Object? fetchStatus = freezed,
+    Object? defaultDevice = null,
+    Object? initialized = null,
+    Object? audioDeviceType = null,
+    Object? audioDevices = null,
+    Object? volume = null,
+    Object? fetchStatus = null,
   }) {
     return _then(_$_Home(
-      defaultDevice: defaultDevice == freezed
+      defaultDevice: null == defaultDevice
           ? _value.defaultDevice
           : defaultDevice // ignore: cast_nullable_to_non_nullable
               as AudioDeviceExtended,
-      initialized: initialized == freezed
+      initialized: null == initialized
           ? _value.initialized
           : initialized // ignore: cast_nullable_to_non_nullable
               as bool,
-      audioDeviceType: audioDeviceType == freezed
+      audioDeviceType: null == audioDeviceType
           ? _value.audioDeviceType
           : audioDeviceType // ignore: cast_nullable_to_non_nullable
               as AudioDeviceType,
-      audioDevices: audioDevices == freezed
+      audioDevices: null == audioDevices
           ? _value._audioDevices
           : audioDevices // ignore: cast_nullable_to_non_nullable
               as List<AudioDeviceExtended>,
-      mixerList: mixerList == freezed
-          ? _value._mixerList
-          : mixerList // ignore: cast_nullable_to_non_nullable
-              as List<ProcessVolumeExtended>,
-      stateFetchAudioMixerPeak: stateFetchAudioMixerPeak == freezed
-          ? _value.stateFetchAudioMixerPeak
-          : stateFetchAudioMixerPeak // ignore: cast_nullable_to_non_nullable
-              as bool,
-      volume: volume == freezed
+      volume: null == volume
           ? _value.volume
           : volume // ignore: cast_nullable_to_non_nullable
               as double,
-      fetchStatus: fetchStatus == freezed
+      fetchStatus: null == fetchStatus
           ? _value.fetchStatus
           : fetchStatus // ignore: cast_nullable_to_non_nullable
               as String,
@@ -189,12 +165,9 @@ class _$_Home implements _Home {
       required this.initialized,
       required this.audioDeviceType,
       required final List<AudioDeviceExtended> audioDevices,
-      required final List<ProcessVolumeExtended> mixerList,
-      required this.stateFetchAudioMixerPeak,
       required this.volume,
       required this.fetchStatus})
-      : _audioDevices = audioDevices,
-        _mixerList = mixerList;
+      : _audioDevices = audioDevices;
 
   factory _$_Home.fromJson(Map<String, dynamic> json) => _$$_HomeFromJson(json);
 
@@ -207,19 +180,11 @@ class _$_Home implements _Home {
   final List<AudioDeviceExtended> _audioDevices;
   @override
   List<AudioDeviceExtended> get audioDevices {
+    if (_audioDevices is EqualUnmodifiableListView) return _audioDevices;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_audioDevices);
   }
 
-  final List<ProcessVolumeExtended> _mixerList;
-  @override
-  List<ProcessVolumeExtended> get mixerList {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_mixerList);
-  }
-
-  @override
-  final bool stateFetchAudioMixerPeak;
   @override
   final double volume;
   @override
@@ -227,7 +192,7 @@ class _$_Home implements _Home {
 
   @override
   String toString() {
-    return 'Home(defaultDevice: $defaultDevice, initialized: $initialized, audioDeviceType: $audioDeviceType, audioDevices: $audioDevices, mixerList: $mixerList, stateFetchAudioMixerPeak: $stateFetchAudioMixerPeak, volume: $volume, fetchStatus: $fetchStatus)';
+    return 'Home(defaultDevice: $defaultDevice, initialized: $initialized, audioDeviceType: $audioDeviceType, audioDevices: $audioDevices, volume: $volume, fetchStatus: $fetchStatus)';
   }
 
   @override
@@ -235,38 +200,33 @@ class _$_Home implements _Home {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Home &&
-            const DeepCollectionEquality()
-                .equals(other.defaultDevice, defaultDevice) &&
-            const DeepCollectionEquality()
-                .equals(other.initialized, initialized) &&
-            const DeepCollectionEquality()
-                .equals(other.audioDeviceType, audioDeviceType) &&
+            (identical(other.defaultDevice, defaultDevice) ||
+                other.defaultDevice == defaultDevice) &&
+            (identical(other.initialized, initialized) ||
+                other.initialized == initialized) &&
+            (identical(other.audioDeviceType, audioDeviceType) ||
+                other.audioDeviceType == audioDeviceType) &&
             const DeepCollectionEquality()
                 .equals(other._audioDevices, _audioDevices) &&
-            const DeepCollectionEquality()
-                .equals(other._mixerList, _mixerList) &&
-            const DeepCollectionEquality().equals(
-                other.stateFetchAudioMixerPeak, stateFetchAudioMixerPeak) &&
-            const DeepCollectionEquality().equals(other.volume, volume) &&
-            const DeepCollectionEquality()
-                .equals(other.fetchStatus, fetchStatus));
+            (identical(other.volume, volume) || other.volume == volume) &&
+            (identical(other.fetchStatus, fetchStatus) ||
+                other.fetchStatus == fetchStatus));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(defaultDevice),
-      const DeepCollectionEquality().hash(initialized),
-      const DeepCollectionEquality().hash(audioDeviceType),
+      defaultDevice,
+      initialized,
+      audioDeviceType,
       const DeepCollectionEquality().hash(_audioDevices),
-      const DeepCollectionEquality().hash(_mixerList),
-      const DeepCollectionEquality().hash(stateFetchAudioMixerPeak),
-      const DeepCollectionEquality().hash(volume),
-      const DeepCollectionEquality().hash(fetchStatus));
+      volume,
+      fetchStatus);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_HomeCopyWith<_$_Home> get copyWith =>
       __$$_HomeCopyWithImpl<_$_Home>(this, _$identity);
 
@@ -284,8 +244,6 @@ abstract class _Home implements Home {
       required final bool initialized,
       required final AudioDeviceType audioDeviceType,
       required final List<AudioDeviceExtended> audioDevices,
-      required final List<ProcessVolumeExtended> mixerList,
-      required final bool stateFetchAudioMixerPeak,
       required final double volume,
       required final String fetchStatus}) = _$_Home;
 
@@ -299,10 +257,6 @@ abstract class _Home implements Home {
   AudioDeviceType get audioDeviceType;
   @override
   List<AudioDeviceExtended> get audioDevices;
-  @override
-  List<ProcessVolumeExtended> get mixerList;
-  @override
-  bool get stateFetchAudioMixerPeak;
   @override
   double get volume;
   @override

@@ -16,8 +16,6 @@ class Home with _$Home {
     required bool initialized,
     required AudioDeviceType audioDeviceType,
     required List<AudioDeviceExtended> audioDevices,
-    required List<ProcessVolumeExtended> mixerList,
-    required bool stateFetchAudioMixerPeak,
     required double volume,
     required String fetchStatus
 }) = _Home;

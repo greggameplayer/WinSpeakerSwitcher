@@ -1,23 +1,30 @@
-import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:win32audio/win32audio.dart';
 import '../../models/audio_device_extended/audio_device_extended.dart';
 import '../../models/audio_extended.dart';
 import '../../models/home/home.dart';
+import '../../models/home/mixer.dart';
 import '../../services/home_service.dart';
 import 'icons_notifier.dart';
+import 'mixer_notifier.dart';
 
 class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
   final Ref ref;
 
   late final IconsNotifier iconsNotifier;
 
+  late final MixerNotifier mixerNotifier;
+
+  late final AsyncValue<Mixer> mixerNotifierState;
+
   late final HomeService service;
 
   HomeNotifier(this.ref) : super(const AsyncValue.loading()) {
     service = ref.watch(homeService);
     iconsNotifier = ref.watch(iconsNotifierProvider.notifier);
+    mixerNotifier = ref.watch(mixerNotifierProvider.notifier);
+    mixerNotifierState = mixerNotifier.state;
   }
 
   Future<void> getData() async {
@@ -36,6 +43,12 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
 
       var mixerList = await AudioExtended.enumAudioMixer() ?? [];
 
+      await mixerNotifier.setData(Mixer(
+          mixerList: mixerList,
+          stateFetchAudioMixerPeak: mixerNotifierState.hasValue
+              ? mixerNotifierState.value!.stateFetchAudioMixerPeak
+              : false));
+
       await iconsNotifier.updateIcons(audioDevices, mixerList);
 
       var fetchStatus = "Get";
@@ -44,7 +57,6 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
           audioDevices: audioDevices,
           volume: volume,
           defaultDevice: defaultDevice,
-          mixerList: mixerList,
           fetchStatus: fetchStatus));
     }
   }
@@ -73,22 +85,6 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
 
   Future<void> handleHotKeyUnregister(HotKey hotKey) async {
     await hotKeyManager.unregister(hotKey);
-  }
-
-  Future<void> audioMixersUpdate() async {
-    if (!mounted) return;
-    if (state.hasValue) {
-      if (state.value!.stateFetchAudioMixerPeak) {
-        var mixerList = await AudioExtended.enumAudioMixer() ?? [];
-
-        if (!const DeepCollectionEquality().equals(state.value!.mixerList, mixerList)) {
-          await iconsNotifier.updateProcessIcons(mixerList);
-        }
-
-        state =
-            AsyncValue<Home>.data(state.value!.copyWith(mixerList: mixerList));
-      }
-    }
   }
 
   Future<void> onPressGetButton() async {
@@ -186,28 +182,6 @@ class HomeNotifier extends StateNotifier<AsyncValue<Home>> {
       fetchAudioDevices();
       state = AsyncValue<Home>.data(state.value!
           .copyWith(defaultDevice: state.value!.audioDevices[index]));
-    }
-  }
-
-  Future<void> onChangedContinuouslyFetchCheckbox(bool? actualState) async {
-    if (!mounted) return;
-
-    if (state.hasValue) {
-      var stateFetchAudioMixerPeak = actualState!;
-      state = AsyncValue<Home>.data(state.value!
-          .copyWith(stateFetchAudioMixerPeak: stateFetchAudioMixerPeak));
-    }
-  }
-
-  Future<void> onChangedProcessSlider(double volume, int index) async {
-    if (!mounted) return;
-
-    if (state.hasValue) {
-      await Audio.setAudioMixerVolume(
-          state.value!.mixerList[index].processId, volume);
-      state.value!.mixerList[index].maxVolume = volume;
-      state = AsyncValue<Home>.data(
-          state.value!.copyWith(mixerList: state.value!.mixerList));
     }
   }
 }

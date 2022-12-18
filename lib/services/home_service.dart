@@ -8,7 +8,7 @@ import '../models/audio_device_extended/audio_device_extended.dart';
 final homeService = Provider((ref) => HomeService());
 
 class HomeService {
-  Home homeState = Home(defaultDevice: AudioDeviceExtended(), initialized: false, audioDeviceType: AudioDeviceType.output, audioDevices: [], mixerList: [], stateFetchAudioMixerPeak: false, volume: 0.0, fetchStatus: "Get");
+  Home homeState = Home(defaultDevice: AudioDeviceExtended(), initialized: false, audioDeviceType: AudioDeviceType.output, audioDevices: [], volume: 0.0, fetchStatus: "Get");
 
   LocalStorage localStorage = LocalStorage('win_speaker_switcher');
 
